@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MiniGestor</title>
+<style>
+body{font-family:system-ui,sans-serif;margin:0;background:#f3f5f4;color:#14302c}
+header{background:#14302c;color:#fff;padding:14px 20px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+header a{color:#fff;text-decoration:none;font-weight:600}
+main{max-width:900px;margin:24px auto;padding:0 16px}
+table{width:100%;border-collapse:collapse;background:#fff;margin-bottom:28px}
+th,td{padding:10px;border-bottom:1px solid #d9e2df;text-align:left}
+.baixo{color:#b5382c;font-weight:700}
+.btn{background:#14302c;color:#fff;border:0;padding:10px 16px;border-radius:8px;cursor:pointer;font-size:1rem}
+form p{margin:0 0 14px}
+label{display:block;font-weight:600;margin-bottom:4px}
+input,select{padding:8px;width:100%;max-width:320px;font-size:1rem}
+.erro{color:#b5382c;font-weight:600}
+</style>
+</head>
+<body>
+<header>
+  <strong>MiniGestor</strong>
+  <a href="{% url 'produto_list' %}">Produtos</a>
+  <a href="{% url 'produto_novo' %}">Novo produto</a>
+  <a href="{% url 'movimentacao_nova' %}">Entrada / Saída</a>
+</header>
+<main>
+{% block conteudo %}{% endblock %}
+</main>
+</body>
+</html>

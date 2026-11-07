@@ -1,0 +1,16 @@
+{% extends "estoque/base.html" %}
+{% block conteudo %}
+<h1>{{ titulo }}</h1>
+<form method="post">
+  {% csrf_token %}
+  <p class="erro">{{ form.non_field_errors }}</p>
+  {% for campo in form %}
+  <p>
+    <label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+    {{ campo }}
+    <span class="erro">{{ campo.errors }}</span>
+  </p>
+  {% endfor %}
+  <button class="btn" type="submit">Salvar</button>
+</form>
+{% endblock %}
