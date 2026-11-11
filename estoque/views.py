@@ -1,3 +1,4 @@
+from django.db.models import F
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView
 
@@ -13,6 +14,18 @@ class ProdutoListView(ListView):
         contexto = super().get_context_data(**kwargs)
         contexto["movimentacoes"] = Movimentacao.objects.select_related("produto")[:10]
         return contexto
+
+
+class ComprarListView(ListView):
+    model = Produto
+    template_name = "estoque/comprar_list.html"
+
+    def get_queryset(self):
+        return (
+            Produto.objects.filter(quantidade__lte=F("estoque_minimo"))
+            .annotate(falta=F("estoque_minimo") - F("quantidade"))
+            .order_by("nome")
+        )
 
 
 class ProdutoCreateView(CreateView):
