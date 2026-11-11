@@ -1,9 +1,8 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView
 
-from .models import Movimentacao, Produto
-
 from .form import MovimentacaoForm
+from .models import Movimentacao, Produto
 
 
 class ProdutoListView(ListView):
@@ -24,16 +23,17 @@ class ProdutoCreateView(CreateView):
     extra_context = {"titulo": "Novo produto"}
 
 
+class ProdutoUpdateView(UpdateView):
+    model = Produto
+    fields = ["nome", "unidade", "preco", "estoque_minimo"]
+    template_name = "estoque/form.html"
+    success_url = reverse_lazy("produto_list")
+    extra_context = {"titulo": "Editar produto"}
+
+
 class MovimentacaoCreateView(CreateView):
     model = Movimentacao
     form_class = MovimentacaoForm
     template_name = "estoque/form.html"
     success_url = reverse_lazy("produto_list")
     extra_context = {"titulo": "Registrar entrada ou saída"}
-
-class ProdutoUpdateView(UpdateView):
-    model = Produto
-    fields = ["nome", "unidade", "preco", "estoque_minimo"]
-    template_name = "estoque/form.html"
-    success_url = reverse_lazy("produto_list")
-    extra_context = {"titulo": "Editar produto"}    

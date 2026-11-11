@@ -28,12 +28,20 @@ class Movimentacao(models.Model):
     ENTRADA = "E"
     SAIDA = "S"
     TIPOS = [(ENTRADA, "Entrada"), (SAIDA, "Saída")]
+    MOTIVOS = [
+        ("compra", "Compra"),
+        ("uso", "Uso / venda"),
+        ("perda", "Perda"),
+        ("vencimento", "Vencimento"),
+        ("ajuste", "Ajuste de contagem"),
+    ]
 
     produto = models.ForeignKey(Produto, on_delete=models.PROTECT, related_name="movimentacoes")
     tipo = models.CharField(max_length=1, choices=TIPOS)
     quantidade = models.DecimalField(
         max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal("0.01"))]
     )
+    motivo = models.CharField(max_length=10, choices=MOTIVOS, blank=True)
     criado_em = models.DateTimeField(auto_now_add=True)
 
     class Meta:
