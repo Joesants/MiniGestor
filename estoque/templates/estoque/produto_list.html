@@ -2,16 +2,17 @@
 {% block conteudo %}
 <h1>Produtos</h1>
 <table>
-  <tr><th>Produto</th><th>Preço</th><th>Em estoque</th><th>Situação</th></tr>
+  <tr><th>Produto</th><th>Preço</th><th>Em estoque</th><th>Situação</th><th></th></tr>
   {% for p in object_list %}
   <tr>
     <td>{{ p.nome }}</td>
     <td>R$ {{ p.preco }}</td>
-    <td>{{ p.quantidade }}</td>
+    <td>{{ p.quantidade|floatformat:"-2" }} {{ p.unidade }}</td>
     <td>{% if p.estoque_baixo %}<span class="baixo">Estoque baixo</span>{% else %}OK{% endif %}</td>
+    <td><a href="{% url 'produto_editar' p.pk %}">Editar</a></td>
   </tr>
   {% empty %}
-  <tr><td colspan="4">Nenhum produto cadastrado ainda.</td></tr>
+  <tr><td colspan="5">Nenhum produto cadastrado ainda.</td></tr>
   {% endfor %}
 </table>
 
@@ -19,7 +20,7 @@
 <table>
   <tr><th>Data</th><th>Produto</th><th>Tipo</th><th>Qtd.</th></tr>
   {% for m in movimentacoes %}
-  <tr><td>{{ m.criado_em|date:"d/m/Y H:i" }}</td><td>{{ m.produto }}</td><td>{{ m.get_tipo_display }}</td><td>{{ m.quantidade }}</td></tr>
+  <tr><td>{{ m.criado_em|date:"d/m/Y H:i" }}</td><td>{{ m.produto }}</td><td>{{ m.get_tipo_display }}</td><td>{{ m.quantidade|floatformat:"-2" }}</td></tr>
   {% empty %}
   <tr><td colspan="4">Sem movimentações.</td></tr>
   {% endfor %}
